@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import UpdateProfile from "./pages/UpdateProfile";
-import AddExpense from "./pages/AddExpense"; 
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Home from "./pages/home";
+import Profile from "./pages/profile";
+import UpdateProfile from "./pages/updateProfile";
+import AddExpense from "./pages/addExpense"; 
 import ErrorBoundary from "./service/errorboundary";
-import ViewExpenses from "./pages/ViewExpenses";
-import UpdateExpense from "./pages/UpdateExpense";
+import ViewExpenses from "./pages/viewExpenses";
+import UpdateExpense from "./pages/updateExpense";
 import { AuthProvider } from "./context/authContext";
 
 function App() {
