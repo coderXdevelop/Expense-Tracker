@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "https://your-frontend.vercel.app",
+  origin: "https://expense-tracker-u7ud.vercel.app",
   credentials: true,
 }));
 app.use(express.json());
