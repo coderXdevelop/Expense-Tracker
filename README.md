@@ -216,4 +216,4 @@ GitHub: [https://github.com/coderXdevelop](https://github.com/coderXdevelop)
 
 # License
 
-This project is for learning a
+This project is for learning and educational purposes.
