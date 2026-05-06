@@ -3,11 +3,11 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
-import UpdateProfile from "./pages/updateProfile";
-import AddExpense from "./pages/addExpense"; 
+import UpdateProfile from "./pages/updateprofile";
+import AddExpense from "./pages/addexpense"; 
 import ErrorBoundary from "./service/errorboundary";
-import ViewExpenses from "./pages/viewExpenses";
-import UpdateExpense from "./pages/updateExpense";
+import ViewExpenses from "./pages/viewexpenses";
+import UpdateExpense from "./pages/updateexpense";
 import { AuthProvider } from "./context/authContext";
 
 function App() {
