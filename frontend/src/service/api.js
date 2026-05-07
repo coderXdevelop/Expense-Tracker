@@ -69,10 +69,9 @@ export const getExpenseById = async (id, token) => {
 };
 
 
-
-export const addExpense = async (expense) => {
+export const addExpenses = async (expenses) => {
   const token = localStorage.getItem("token");
-  const res = await API.post("/expenses", expense, {
+  const res = await API.post("/expenses", { expenses }, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
   return res.data;

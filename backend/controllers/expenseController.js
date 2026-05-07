@@ -2,23 +2,22 @@ const Expense = require('../models/expense');
 const asyncHandler = require('express-async-handler');
 
 // Create a new expense
-exports.createExpense = asyncHandler(async (req, res) => {
-  const { amount, description, category, date } = req.body;
-
-  if (!amount || !description || !category || !date) {
-    return res.status(400).json({ message: 'All fields are required' });
+exports.createExpenses = asyncHandler(async (req, res) => {
+  const expensesData = req.body.expenses;
+  if (!Array.isArray(expensesData) || expensesData.length === 0) {
+    return res.status(400).json({ message: 'Expenses must be a non-empty array' });
   }
 
-  const newExpense = new Expense({
-    amount,
-    description,
-    category,
-    date,
+  const expensesToCreate = expensesData.map(expense => ({
+    amount: expense.amount,
+    description: expense.description,
+    category: expense.category,
+    date: expense.date,
     user: req.user._id,
-  });
+  }));
 
-  const savedExpense = await newExpense.save();
-  res.status(201).json(savedExpense);
+  const createdExpenses = await Expense.insertMany(expensesToCreate);
+  res.status(201).json(createdExpenses);
 });
 
 // Get all expenses for the authenticated user

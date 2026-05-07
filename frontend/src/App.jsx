@@ -4,7 +4,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
 import UpdateProfile from "./pages/updateprofile";
-import AddExpense from "./pages/addexpense"; 
+import AddExpenses from "./pages/addexpense"; 
 import ErrorBoundary from "./service/errorboundary";
 import ViewExpenses from "./pages/viewexpenses";
 import UpdateExpense from "./pages/updateexpense";

@@ -469,6 +469,25 @@ h3 { font-size: 1.125rem; }
 
 .table-actions { display: flex; gap: 0.5rem; }
 
+/* ── Expense Form Customizations ───────────────────────── */
+.expense-form .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.expense-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.expense-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+
 /* ── Empty State ────────────────────────────────────────── */
 .empty-state {
   text-align: center;

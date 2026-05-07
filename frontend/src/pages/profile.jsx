@@ -54,7 +54,7 @@ const Profile = () => {
 
       <div className="profile-actions">
         <Link to="/profile/update" className="btn btn-secondary">✎ Update Profile</Link>
-        <Link to="/add-expense" className="btn btn-primary">+ Add Expense</Link>
+        <Link to="/add-expenses" className="btn btn-primary">+ Add Expense</Link>
         <Link to="/get-expenses" className="btn btn-secondary">📊 View Expenses</Link>
         <button onClick={handleLogout} className="btn btn-danger">⎋ Logout</button>
       </div>

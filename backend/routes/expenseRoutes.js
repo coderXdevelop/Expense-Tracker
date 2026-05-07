@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { createExpense, getExpenses,getExpenseById, updateExpense, deleteExpense } = require("../controllers/expenseController");
+const { createExpenses, getExpenses,getExpenseById, updateExpense, deleteExpense } = require("../controllers/expenseController");
 const { protect } = require("../middleware/authMiddleware");
 
 // Protected routes
-router.post("/", protect, createExpense);
+router.post("/", protect, createExpenses);
 router.get("/", protect, getExpenses);
 router.get("/:id", protect, getExpenseById);
 router.put("/:id", protect, updateExpense);

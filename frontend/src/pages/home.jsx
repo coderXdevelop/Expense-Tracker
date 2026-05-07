@@ -25,7 +25,7 @@ const Home = () => {
       </div>
 
       <nav className="home-nav">
-        <Link to="/add-expense" className="nav-card">
+        <Link to="/add-expenses" className="nav-card">
           <span className="nav-card-icon">➕</span>
           <span className="nav-card-title">Add Expense</span>
           <span className="nav-card-desc">Record a new transaction</span>
