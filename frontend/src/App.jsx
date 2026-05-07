@@ -20,7 +20,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/update" element={<UpdateProfile />} />
-          <Route path="/add-expense" element={<AddExpense />} />
+          <Route path="/add-expenses" element={<AddExpenses />} />
           <Route path="/get-expenses" element={<ErrorBoundary><ViewExpenses /></ErrorBoundary>} />
           <Route path="/expenses/:id/edit" element={<UpdateExpense />} />
           <Route path="/" element={<Login />} /> {/* default route */}
