@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/authContext";
-import { addExpenses } from "../service/api";
+import { addExpenses } from "../service/Api";
 import { Link } from "react-router-dom";
 
 const AddExpense = () => {

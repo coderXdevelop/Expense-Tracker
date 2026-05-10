@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import { getUserProfile, logout } from "../service/api";
+import { getUserProfile, logout } from "../service/Api";
 
 const Profile = () => {
   const { user, setUser } = useAuth();

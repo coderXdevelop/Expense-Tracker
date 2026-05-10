@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import { updateUserProfile, getUserProfile } from "../service/api";
+import { updateUserProfile, getUserProfile } from "../service/Api";
 
 
 const UpdateProfile = () => {
