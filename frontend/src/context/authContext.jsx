@@ -8,6 +8,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setUser(null);
+        return;
+      }
+
       try {
         const currentUser = await getUserProfile();
         setUser(currentUser);
