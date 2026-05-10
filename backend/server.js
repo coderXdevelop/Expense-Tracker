@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 // Validate required environment variables
-const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'EMAIL_USER', 'BREVO_USER', 'BREVO_API_KEY'];
+const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'EMAIL_USER', 'BREVO_API_KEY'];
 const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {

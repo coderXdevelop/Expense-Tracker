@@ -5,14 +5,29 @@ const User = require("../models/userModel");
 
 // Utility: Send OTP Email (Brevo)
 const sendOtpEmail = async (to, otp) => {
+  const smtpUser = process.env.BREVO_SMTP_USER || "apikey";
+
   const transporter = nodemailer.createTransport({
     host: "smtp-relay.brevo.com",
     port: 587,
     secure: false,
     auth: {
-      user: process.env.BREVO_USER,     // Brevo login email
-      pass: process.env.BREVO_API_KEY   // Brevo SMTP key
+      // Brevo SMTP uses literal username "apikey" and the SMTP key as password
+      user: smtpUser,
+      pass: process.env.BREVO_API_KEY
+    },
+    tls: {
+      rejectUnauthorized: false
     }
+  });
+
+  console.log('SMTP config', {
+    host: transporter.options.host,
+    port: transporter.options.port,
+    secure: transporter.options.secure,
+    user: transporter.options.auth.user,
+    sender: process.env.EMAIL_USER,
+    brevoKeySet: !!process.env.BREVO_API_KEY
   });
 
   const mailOptions = {
@@ -35,7 +50,15 @@ const sendOtpEmail = async (to, otp) => {
     console.log(`✅ OTP email sent to ${to}. Message ID: ${info.messageId}`);
     return info;
   } catch (error) {
-    console.error("❌ Failed to send OTP email:", error.message);
+    console.error("❌ Failed to send OTP email:", {
+      message: error.message,
+      code: error.code,
+      response: error.response,
+      responseCode: error.responseCode,
+      command: error.command,
+      host: error.host,
+      port: error.port
+    });
     throw new Error(`Failed to send OTP email: ${error.message}`);
   }
 };
