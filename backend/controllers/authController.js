@@ -1,66 +1,61 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
 const User = require("../models/userModel");
 
-// Utility: Send OTP Email (Brevo)
+// Utility: Send OTP Email via Brevo HTTP API
 const sendOtpEmail = async (to, otp) => {
-  const smtpUser = process.env.BREVO_SMTP_USER || "apikey";
+  const senderEmail = process.env.EMAIL_USER;
+  const senderName = process.env.EMAIL_NAME || "Expense Tracker";
+  const brevoApiKey = process.env.BREVO_API_KEY;
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    auth: {
-      // Brevo SMTP uses literal username "apikey" and the SMTP key as password
-      user: smtpUser,
-      pass: process.env.BREVO_API_KEY
+  if (!senderEmail || !brevoApiKey) {
+    throw new Error("Missing Brevo sender email or API key");
+  }
+
+  const payload = {
+    sender: {
+      email: senderEmail,
+      name: senderName,
     },
-    tls: {
-      rejectUnauthorized: false
-    }
-  });
-
-  console.log('SMTP config', {
-    host: transporter.options.host,
-    port: transporter.options.port,
-    secure: transporter.options.secure,
-    user: transporter.options.auth.user,
-    sender: process.env.EMAIL_USER,
-    brevoKeySet: !!process.env.BREVO_API_KEY
-  });
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,       // verified sender in Brevo
-    to,
+    to: [
+      {
+        email: to,
+      },
+    ],
     subject: "Verify your email - Expense Tracker",
-    text: `Your OTP code is ${otp}. It expires in 10 minutes.`,
-    html: `
+    textContent: `Your OTP code is ${otp}. It expires in 10 minutes.`,
+    htmlContent: `
       <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;">
         <h2 style="color: #333;">Email Verification</h2>
         <p>Your OTP code is: <strong style="font-size: 24px; color: #007bff;">${otp}</strong></p>
         <p>It expires in 10 minutes.</p>
         <p style="color: #666; font-size: 12px;">If you did not request this code, please ignore this email.</p>
       </div>
-    `
+    `,
   };
 
-  try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ OTP email sent to ${to}. Message ID: ${info.messageId}`);
-    return info;
-  } catch (error) {
-    console.error("❌ Failed to send OTP email:", {
-      message: error.message,
-      code: error.code,
-      response: error.response,
-      responseCode: error.responseCode,
-      command: error.command,
-      host: error.host,
-      port: error.port
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "api-key": brevoApiKey,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    console.error("❌ Brevo API email send failed:", {
+      status: response.status,
+      body: result,
     });
-    throw new Error(`Failed to send OTP email: ${error.message}`);
+    const errorMessage = result.message || result.title || response.statusText;
+    throw new Error(`Brevo email send failed: ${errorMessage}`);
   }
+
+  console.log(`✅ OTP email sent to ${to}. Brevo API response: ${JSON.stringify(result)}`);
+  return result;
 };
 
 // Register Controller
