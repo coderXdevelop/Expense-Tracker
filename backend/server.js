@@ -46,6 +46,18 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// Debug endpoint - Check environment variables (REMOVE IN PRODUCTION)
+app.get('/api/debug/env', (req, res) => {
+    res.status(200).json({ 
+      MONGO_URI: process.env.MONGO_URI ? '✅ Set' : '❌ Missing',
+      JWT_SECRET: process.env.JWT_SECRET ? '✅ Set' : '❌ Missing',
+      EMAIL_USER: process.env.EMAIL_USER ? '✅ Set' : '❌ Missing',
+      EMAIL_PASS: process.env.EMAIL_PASS ? '✅ Set (length: ' + process.env.EMAIL_PASS.length + ')' : '❌ Missing',
+      NODE_ENV: process.env.NODE_ENV || 'development',
+      PORT: process.env.PORT || '5000'
+    });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error('🔴 Error:', err.stack);

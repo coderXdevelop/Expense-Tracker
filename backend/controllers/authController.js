@@ -7,28 +7,56 @@ const User = require("../models/userModel");
 const sendOtpEmail = async (to, otp) => {
   // Validate email configuration
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.error("❌ Email config missing:", {
+      EMAIL_USER: process.env.EMAIL_USER ? '✅' : '❌',
+      EMAIL_PASS: process.env.EMAIL_PASS ? '✅' : '❌'
+    });
     throw new Error("Email service not configured. Missing EMAIL_USER or EMAIL_PASS");
   }
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER,       // your Gmail address
-      pass: process.env.EMAIL_PASS        // Gmail App Password (not your normal password)
+      user: process.env.EMAIL_USER.trim(),       // Remove any whitespace
+      pass: process.env.EMAIL_PASS.trim()        // Remove any whitespace
+    },
+    pool: true,
+    maxConnections: 1,
+    maxMessages: 5,
+    rateDelta: 2000,
+    rateLimit: 3,
+    secure: true,
+    tls: {
+      rejectUnauthorized: false
     }
   });
 
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
-      subject: "Verify your email",
+    console.log(`📧 Attempting to send OTP to: ${to}`);
+    const mailOptions = {
+      from: process.env.EMAIL_USER.trim(),
+      to: to.trim(),
+      subject: "Verify your email - Expense Tracker",
       text: `Your OTP code is ${otp}. It expires in 10 minutes.`,
-      html: `<h2>Email Verification</h2><p>Your OTP code is: <strong>${otp}</strong></p><p>It expires in 10 minutes.</p>`
-    });
-    console.log(`OTP sent successfully to ${to}`);
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;">
+          <h2 style="color: #333;">Email Verification</h2>
+          <p>Your OTP code is: <strong style="font-size: 24px; color: #007bff;">${otp}</strong></p>
+          <p>It expires in 10 minutes.</p>
+          <p style="color: #666; font-size: 12px;">If you did not request this code, please ignore this email.</p>
+        </div>
+      `
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ OTP email sent successfully to ${to}. Message ID: ${info.messageId}`);
+    return info;
   } catch (error) {
-    console.error("Failed to send OTP email:", error.message);
+    console.error("❌ Failed to send OTP email:", {
+      error: error.message,
+      code: error.code,
+      responseCode: error.responseCode
+    });
     throw new Error(`Failed to send OTP email: ${error.message}`);
   }
 };
