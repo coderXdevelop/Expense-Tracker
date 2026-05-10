@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
+const dns = require("dns");
 const User = require("../models/userModel");
 
 // Utility: Send OTP Email (Gmail)
@@ -22,7 +23,9 @@ const sendOtpEmail = async (to, otp) => {
       user: process.env.EMAIL_USER.trim(),       // Remove any whitespace
       pass: process.env.EMAIL_PASS.trim()        // Remove any whitespace
     },
-    family: 4,
+    lookup: (hostname, options, callback) => {
+      return dns.lookup(hostname, { family: 4 }, callback);
+    },
     pool: true,
     maxConnections: 1,
     maxMessages: 5,
