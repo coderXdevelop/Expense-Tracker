@@ -1,6 +1,6 @@
 import { useAuth } from "../context/authContext";
 import { useState, useEffect } from "react";
-import { getExpenseById, updateExpense } from "../service/api";
+import { getExpenseById, updateExpense } from "../service/Api";
 import { useParams, Link } from "react-router-dom";
 
 const UpdateExpense = () => {
@@ -47,7 +47,8 @@ const UpdateExpense = () => {
     <div className="page">
       <div className="page-header">
         <h2>Update Expense</h2>
-        <Link to="/get-expenses" className="btn btn-ghost btn-sm">← Back to Expenses</Link>
+        {/* FIXED: route now points to /expenses */}
+        <Link to="/expenses" className="btn btn-ghost btn-sm">← Back to Expenses</Link>
       </div>
 
       <div className="card">

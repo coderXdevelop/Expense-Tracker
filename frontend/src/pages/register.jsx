@@ -1,6 +1,7 @@
-import { register } from '../service/api';
+import { register } from '../service/Api';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +15,8 @@ const Register = () => {
     try {
       const response = await register(username, email, password);
       console.log("Registration success:", response);
-      navigate('/login');
+      // ✅ Redirect to OTP verification page
+      navigate('/verify-otp', { state: { email } });
     } catch (error) {
       console.error("Registration error:", error);
       setError('Registration failed. Please try again.');

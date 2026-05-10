@@ -3,10 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
-const { protect } = require('./middleware/authMiddleware');
+const cors = require('cors');
+
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
-const cors = require('cors');
+
 const app = express();
 
 // Middleware
@@ -22,9 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // Routes
-app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/expenses', expenseRoutes);
+app.use('/api', expenseRoutes);  
 
 // Health check route
 app.get('/api/health', (req, res) => {

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { getUserProfile, logout } from "../service/api";
 
-
 const Profile = () => {
   const { user, setUser } = useAuth();
   const [profile, setProfile] = useState(null);
@@ -16,7 +15,7 @@ const Profile = () => {
         const profileData = await getUserProfile();
         setProfile(profileData);
       } catch {
-        navigate("/");
+        navigate("/login"); // redirect to login if not authenticated
       } finally {
         setLoading(false);
       }
@@ -27,14 +26,16 @@ const Profile = () => {
   const handleLogout = async () => {
     await logout();
     setUser(null);
-    navigate("/");
+    navigate("/login");
   };
 
-  if (loading) return (
-    <div className="loading">
-      <div className="spinner" />
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="loading">
+        <div className="spinner" />
+      </div>
+    );
+  }
 
   if (!profile) return null;
 
@@ -53,10 +54,19 @@ const Profile = () => {
       </div>
 
       <div className="profile-actions">
-        <Link to="/profile/update" className="btn btn-secondary">✎ Update Profile</Link>
-        <Link to="/add-expenses" className="btn btn-primary">+ Add Expense</Link>
-        <Link to="/get-expenses" className="btn btn-secondary">📊 View Expenses</Link>
-        <button onClick={handleLogout} className="btn btn-danger">⎋ Logout</button>
+        <Link to="/profile/update" className="btn btn-secondary">
+          ✎ Update Profile
+        </Link>
+        <Link to="/expenses/add" className="btn btn-primary">
+          + Add Expense
+        </Link>
+        <Link to="/expenses" className="btn btn-secondary">
+          📊 View Expenses
+        </Link>
+
+        <button onClick={handleLogout} className="btn btn-danger">
+          ⎋ Logout
+        </button>
       </div>
     </div>
   );

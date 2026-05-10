@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/login";
-import Register from "./pages/register";
-import Home from "./pages/home";
-import Profile from "./pages/profile";
-import UpdateProfile from "./pages/updateprofile";
-import AddExpenses from "./pages/addexpense"; 
-import ErrorBoundary from "./service/errorboundary";
-import ViewExpenses from "./pages/viewexpenses";
-import UpdateExpense from "./pages/updateexpense";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import VerifyOtp from "./pages/VerifyOtp";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import UpdateProfile from "./pages/UpdateProfile";
+import AddExpense from "./pages/AddExpense"; 
+import ErrorBoundary from "./service/ErrorBoundary";
+import ViewExpenses from "./pages/ViewExpenses";
+import UpdateExpense from "./pages/UpdateExpense";
 import { AuthProvider } from "./context/authContext";
 
 function App() {
@@ -15,15 +16,32 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          {/* Auth */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify-otp" element={<VerifyOtp />} />
+
+          {/* Main */}
           <Route path="/home" element={<Home />} />
+
+          {/* Profile */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/update" element={<UpdateProfile />} />
-          <Route path="/add-expenses" element={<AddExpenses />} />
-          <Route path="/get-expenses" element={<ErrorBoundary><ViewExpenses /></ErrorBoundary>} />
+
+          {/* Expenses */}
+          <Route path="/expenses/add" element={<AddExpense />} />
+          <Route
+            path="/expenses"
+            element={
+              <ErrorBoundary>
+                <ViewExpenses />
+              </ErrorBoundary>
+            }
+          />
           <Route path="/expenses/:id/edit" element={<UpdateExpense />} />
-          <Route path="/" element={<Login />} /> {/* default route */}
+
+          {/* Default */}
+          <Route path="/" element={<Login />} />
         </Routes>
       </Router>
     </AuthProvider>

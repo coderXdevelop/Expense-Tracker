@@ -1,11 +1,23 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import { logout, deleteExpense, getExpenses } from "../service/api";
-
+import {
+  logout,
+  deleteExpense,
+  getExpenses,
+  getExpensesByCategory,
+  getExpensesByDateRange,
+  getExpensesByDay,
+  getExpensesByAmountRange,
+  getExpensesByExactAmount,
+  getExpensesTotal,
+} from "../service/Api";
+import ExpenseTable from "./ExpenseTable";
+import FilterBar from "./FilterBar";
 
 const ViewExpenses = () => {
   const [expenses, setExpenses] = useState([]);
+  const [lifetimeTotal, setLifetimeTotal] = useState(0);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -14,6 +26,7 @@ const ViewExpenses = () => {
       navigate("/login");
     } else {
       fetchExpenses();
+      fetchLifetimeTotal();
     }
   }, [user, navigate]);
 
@@ -23,6 +36,35 @@ const ViewExpenses = () => {
       setExpenses(data);
     } catch (error) {
       console.error("Error fetching expenses:", error);
+    }
+  };
+
+  const fetchLifetimeTotal = async () => {
+    try {
+      const data = await getExpensesTotal();
+      setLifetimeTotal(data.totalAmount);
+    } catch (error) {
+      console.error("Error fetching total:", error);
+    }
+  };
+
+  const handleFilter = async ({ category, exactAmount, minAmount, maxAmount, day, startDate, endDate }) => {
+    try {
+      if (category) {
+        setExpenses(await getExpensesByCategory(category));
+      } else if (exactAmount) {
+        setExpenses(await getExpensesByExactAmount(exactAmount));
+      } else if (minAmount && maxAmount) {
+        setExpenses(await getExpensesByAmountRange(minAmount, maxAmount));
+      } else if (day) {
+        setExpenses(await getExpensesByDay(day));
+      } else if (startDate && endDate) {
+        setExpenses(await getExpensesByDateRange(startDate, endDate));
+      } else {
+        fetchExpenses();
+      }
+    } catch (error) {
+      console.error("Error applying filters:", error);
     }
   };
 
@@ -40,6 +82,7 @@ const ViewExpenses = () => {
     try {
       await deleteExpense(id);
       fetchExpenses();
+      fetchLifetimeTotal();
     } catch (error) {
       console.error("Error deleting expense:", error);
     }
@@ -49,72 +92,22 @@ const ViewExpenses = () => {
     <div className="page-wide">
       <div className="page-header">
         <h1>Your Expenses</h1>
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          <Link to="/add-expense" className="btn btn-primary btn-sm">+ Add New</Link>
+        <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+          <Link to="/expenses/add" className="btn btn-primary btn-sm">+ Add New</Link>
           <button onClick={handleLogout} className="btn btn-danger btn-sm">⎋ Logout</button>
         </div>
       </div>
 
-      {expenses.length === 0 ? (
-        <div className="empty-state">
-          <div className="empty-state-icon">🧾</div>
-          <p>No expenses found. Start tracking your spending!</p>
-          <Link to="/add-expense" className="btn btn-primary">+ Add an Expense</Link>
-        </div>
-      ) : (
-        <div className="table-wrapper">
-          <table className="expense-table">
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {expenses.map((expense) => (
-                <tr key={expense._id}>
-                  <td>{expense.description}</td>
-                  <td>
-                    <span className="expense-amount">${expense.amount.toFixed(2)}</span>
-                  </td>
-                  <td>
-                    <span className="expense-category">{expense.category}</span>
-                  </td>
-                  <td>
-                    <span className="expense-date">
-                      {new Date(expense.date).toLocaleDateString()}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="table-actions">
-                      <button
-                        className="btn btn-secondary btn-sm"
-                        onClick={() => navigate(`/expenses/${expense._id}/edit`)}
-                      >
-                        ✎ Edit
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="table-actions">
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDelete(expense._id)}
-                      >
-                        ✕ Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {/* Filters */}
+      <FilterBar onFilter={handleFilter} />
+
+      {/* Table */}
+      <ExpenseTable expenses={expenses} onDelete={handleDelete} />
+
+      {/* Totals */}
+      <div className="totals-bar">
+        <p><strong>Lifetime Total:</strong> ${lifetimeTotal.toFixed(2)}</p>
+      </div>
     </div>
   );
 };
