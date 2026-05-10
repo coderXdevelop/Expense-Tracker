@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import VerifyOtp from "./pages/VerifyOtp";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import UpdateProfile from "./pages/UpdateProfile";
-import AddExpense from "./pages/AddExpense"; 
-import ErrorBoundary from "./service/ErrorBoundary";
-import ViewExpenses from "./pages/ViewExpenses";
-import UpdateExpense from "./pages/UpdateExpense";
-import { AuthProvider } from "./context/authContext";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import VerifyOtp from "./pages/VerifyOtp.jsx";
+import Home from "./pages/Home.jsx";
+import Profile from "./pages/Profile.jsx";
+import UpdateProfile from "./pages/UpdateProfile.jsx";
+import AddExpense from "./pages/AddExpense.jsx"; 
+import ErrorBoundary from "./service/ErrorBoundary.jsx";
+import ViewExpenses from "./pages/ViewExpenses.jsx";
+import UpdateExpense from "./pages/UpdateExpense.jsx";
+import { AuthProvider } from "./context/authContext.jsx";
 
 function App() {
   return (
