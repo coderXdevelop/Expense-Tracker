@@ -41,6 +41,9 @@ const AddExpense = () => {
         <Link to="/expenses" className="btn btn-ghost btn-sm">
           ← Back to Expenses
         </Link>
+        <Link to="/profile" className="btn btn-ghost btn-sm">
+          ← Back to Profile
+        </Link>
       </div>
 
       <form onSubmit={handleSubmit} className="card">

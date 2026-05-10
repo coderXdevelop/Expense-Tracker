@@ -94,6 +94,9 @@ const ViewExpenses = () => {
         <h1>Your Expenses</h1>
         <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
           <Link to="/expenses/add" className="btn btn-primary btn-sm">+ Add New</Link>
+          <Link to="/profile" className="btn btn-secondary btn-sm">
+            ← Back to Profile
+          </Link>
           <button onClick={handleLogout} className="btn btn-danger btn-sm">⎋ Logout</button>
         </div>
       </div>
