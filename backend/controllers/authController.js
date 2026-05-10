@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const User = require("../models/userModel");
 
@@ -15,17 +15,19 @@ const sendOtpEmail = async (to, otp) => {
   }
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.EMAIL_USER.trim(),       // Remove any whitespace
       pass: process.env.EMAIL_PASS.trim()        // Remove any whitespace
     },
+    family: 4,
     pool: true,
     maxConnections: 1,
     maxMessages: 5,
     rateDelta: 2000,
     rateLimit: 3,
-    secure: true,
     tls: {
       rejectUnauthorized: false
     }
