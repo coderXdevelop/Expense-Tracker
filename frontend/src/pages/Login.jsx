@@ -17,8 +17,15 @@ const Login = () => {
     setLoading(true);
     try {
       const data = await login(email, password);
-      setUser(data);
-      navigate('/profile');
+
+      // ✅ Ensure token is saved before navigating
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        setUser(data);
+        navigate('/profile');
+      } else {
+        setError("No token received from server");
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

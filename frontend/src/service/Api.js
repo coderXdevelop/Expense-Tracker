@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}/api`,
-  withCredentials: true, // Include cookies for session management
+  withCredentials: true,
 });
 
 // Helper: attach token
@@ -22,7 +22,6 @@ export const register = async (username, email, password) => {
   const res = await API.post("/auth/register", { username, email, password });
   return res.data;
 };
-
 
 export const verifyOtp = async (email, otp) => {
   const res = await API.post("/auth/verify-otp", { email, otp });
