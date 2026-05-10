@@ -1,25 +1,31 @@
-import { register } from '../service/Api.js';
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { register } from "../service/Api.js";
 
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
+
     try {
-      const response = await register(username, email, password);
-      console.log("Registration success:", response);
-      // ✅ Redirect to OTP verification page
-      navigate('/verify-otp', { state: { email } });
-    } catch (error) {
-      console.error("Registration error:", error);
-      setError('Registration failed. Please try again.');
+      const data = await register(username, email, password);
+      console.log("Registration success:", data);
+
+      // If backend signals OTP verification required
+      if (data.success === true || data.message?.includes("OTP")) {
+        navigate("/verify-otp", { state: { email } });
+      } else {
+        setError(data.message || "Unexpected response from server.");
+      }
+    } catch (err) {
+      console.error("Registration error:", err);
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
     }
   };
 

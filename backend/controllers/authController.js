@@ -51,7 +51,13 @@ const register = async (req, res) => {
 
   await sendOtpEmail(email, otp);
 
-  return res.status(201).json({ message: "OTP sent to email. Please verify." });
+  return res.status(201).json({
+    success: true,
+    message: "OTP sent to email. Please verify.",
+    isVerified: false,
+    email: user.email
+  });
+
 };
 
 // Verify OTP Controller

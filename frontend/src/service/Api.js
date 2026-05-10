@@ -23,6 +23,7 @@ export const register = async (username, email, password) => {
   return res.data;
 };
 
+
 export const verifyOtp = async (email, otp) => {
   const res = await API.post("/auth/verify-otp", { email, otp });
   if (res.data.token) localStorage.setItem("token", res.data.token);
