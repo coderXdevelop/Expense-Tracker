@@ -1,4 +1,4 @@
-import { register } from '../service/Api';
+import { register } from '../service/Api.js';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 

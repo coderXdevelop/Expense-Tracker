@@ -1,6 +1,6 @@
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/authContext.jsx";
 import { useState, useEffect } from "react";
-import { getExpenseById, updateExpense } from "../service/Api";
+import { getExpenseById, updateExpense } from "../service/Api.js";
 import { useParams, Link } from "react-router-dom";
 
 const UpdateExpense = () => {

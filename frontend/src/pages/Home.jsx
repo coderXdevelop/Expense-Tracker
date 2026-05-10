@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { getUserProfile } from '../service/Api';
+import { getUserProfile } from '../service/Api.js';
 import { useAuth } from '../context/authContext';
 
 const Home = () => {

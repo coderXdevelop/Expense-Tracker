@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/authContext.jsx";
 import {
   logout,
   deleteExpense,
@@ -11,9 +11,9 @@ import {
   getExpensesByAmountRange,
   getExpensesByExactAmount,
   getExpensesTotal,
-} from "../service/Api";
-import ExpenseTable from "./ExpenseTable";
-import FilterBar from "./FilterBar";
+} from "../service/Api.js";
+import ExpenseTable from "./ExpenseTable.jsx";
+import FilterBar from "./Filterbar.jsx";
 
 const ViewExpenses = () => {
   const [expenses, setExpenses] = useState([]);
