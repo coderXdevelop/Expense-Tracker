@@ -3,13 +3,13 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const User = require("../models/userModel");
 
-// Utility: Send OTP Email
+// Utility: Send OTP Email (Gmail)
 const sendOtpEmail = async (to, otp) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS // Gmail app password
+      user: process.env.EMAIL_USER,       // your Gmail address
+      pass: process.env.EMAIL_PASS        // Gmail App Password (not your normal password)
     }
   });
 
@@ -57,7 +57,6 @@ const register = async (req, res) => {
     isVerified: false,
     email: user.email
   });
-
 };
 
 // Verify OTP Controller
