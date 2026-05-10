@@ -23,7 +23,6 @@ const sendOtpEmail = async (to, otp) => {
 
 // Register Controller
 const register = async (req, res) => {
-  console.log("Registering user with data:", req.body);
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
