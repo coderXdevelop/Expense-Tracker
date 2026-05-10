@@ -86,23 +86,32 @@ const register = async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiry = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-    const user = await User.create({
-      username,
-      email,
-      password: hashedPassword,
-      otp,
-      otpExpiry: expiry,
-      isVerified: false
-    });
+    let user;
+    try {
+      user = await User.create({
+        username,
+        email,
+        password: hashedPassword,
+        otp,
+        otpExpiry: expiry,
+        isVerified: false
+      });
 
-    await sendOtpEmail(email, otp);
+      await sendOtpEmail(email, otp);
 
-    return res.status(201).json({
-      success: true,
-      message: "OTP sent to email. Please verify.",
-      isVerified: false,
-      email: user.email
-    });
+      return res.status(201).json({
+        success: true,
+        message: "OTP sent to email. Please verify.",
+        isVerified: false,
+        email: user.email
+      });
+    } catch (emailError) {
+      if (user) {
+        await User.deleteOne({ _id: user._id });
+        console.error(`Deleted user ${user.email} because OTP email failed`);
+      }
+      throw emailError;
+    }
   } catch (error) {
     console.error("Registration error:", error);
     return res.status(500).json({ 
