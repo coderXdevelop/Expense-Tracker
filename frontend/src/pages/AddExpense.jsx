@@ -38,7 +38,7 @@ const AddExpense = () => {
     <div className="page">
       <div className="page-header">
         <h2>Add Expense</h2>
-        <Link to="/get-expenses" className="btn btn-ghost btn-sm">
+        <Link to="/expenses" className="btn btn-ghost btn-sm">
           ← Back to Expenses
         </Link>
       </div>
