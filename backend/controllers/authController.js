@@ -1,67 +1,41 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const dns = require("dns");
 const User = require("../models/userModel");
 
-// Utility: Send OTP Email (Gmail)
+// Utility: Send OTP Email (Brevo)
 const sendOtpEmail = async (to, otp) => {
-  // Validate email configuration
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error("❌ Email config missing:", {
-      EMAIL_USER: process.env.EMAIL_USER ? '✅' : '❌',
-      EMAIL_PASS: process.env.EMAIL_PASS ? '✅' : '❌'
-    });
-    throw new Error("Email service not configured. Missing EMAIL_USER or EMAIL_PASS");
-  }
-
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
     auth: {
-      user: process.env.EMAIL_USER.trim(),       // Remove any whitespace
-      pass: process.env.EMAIL_PASS.trim()        // Remove any whitespace
-    },
-    lookup: (hostname, options, callback) => {
-      return dns.lookup(hostname, { family: 4 }, callback);
-    },
-    pool: true,
-    maxConnections: 1,
-    maxMessages: 5,
-    rateDelta: 2000,
-    rateLimit: 3,
-    tls: {
-      rejectUnauthorized: false
+      user: process.env.BREVO_USER,     // Brevo login email
+      pass: process.env.BREVO_API_KEY   // Brevo SMTP key
     }
   });
 
-  try {
-    console.log(`📧 Attempting to send OTP to: ${to}`);
-    const mailOptions = {
-      from: process.env.EMAIL_USER.trim(),
-      to: to.trim(),
-      subject: "Verify your email - Expense Tracker",
-      text: `Your OTP code is ${otp}. It expires in 10 minutes.`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;">
-          <h2 style="color: #333;">Email Verification</h2>
-          <p>Your OTP code is: <strong style="font-size: 24px; color: #007bff;">${otp}</strong></p>
-          <p>It expires in 10 minutes.</p>
-          <p style="color: #666; font-size: 12px;">If you did not request this code, please ignore this email.</p>
-        </div>
-      `
-    };
+  const mailOptions = {
+    from: process.env.EMAIL_USER,       // verified sender in Brevo
+    to,
+    subject: "Verify your email - Expense Tracker",
+    text: `Your OTP code is ${otp}. It expires in 10 minutes.`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;">
+        <h2 style="color: #333;">Email Verification</h2>
+        <p>Your OTP code is: <strong style="font-size: 24px; color: #007bff;">${otp}</strong></p>
+        <p>It expires in 10 minutes.</p>
+        <p style="color: #666; font-size: 12px;">If you did not request this code, please ignore this email.</p>
+      </div>
+    `
+  };
 
+  try {
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ OTP email sent successfully to ${to}. Message ID: ${info.messageId}`);
+    console.log(`✅ OTP email sent to ${to}. Message ID: ${info.messageId}`);
     return info;
   } catch (error) {
-    console.error("❌ Failed to send OTP email:", {
-      error: error.message,
-      code: error.code,
-      responseCode: error.responseCode
-    });
+    console.error("❌ Failed to send OTP email:", error.message);
     throw new Error(`Failed to send OTP email: ${error.message}`);
   }
 };
