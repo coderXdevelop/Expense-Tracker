@@ -407,6 +407,79 @@ h3 { font-size: 1.125rem; }
   margin-bottom: 2.5rem;
 }
 
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.download-section {
+  position: relative;
+}
+
+.download-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.download-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  z-index: 10;
+  min-width: 160px;
+  overflow: hidden;
+  animation: fadeDown 0.2s ease both;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.download-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition);
+  border-bottom: 1px solid var(--border);
+  font-family: 'Sora', sans-serif;
+}
+
+.download-option:last-child {
+  border-bottom: none;
+}
+
+.download-option:hover {
+  background: var(--bg-3);
+  color: var(--gold-text);
+  padding-left: 1.25rem;
+}
+
 .expense-table {
   width: 100%;
   border-collapse: collapse;
