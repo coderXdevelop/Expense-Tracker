@@ -86,7 +86,7 @@ const ExpenseTable = ({ expenses, onDelete }) => {
               (expense) => `
             <tr>
               <td>${expense.description}</td>
-              <td>$${expense.amount.toFixed(2)}</td>
+              <td>₹${expense.amount.toFixed(2)}</td>
               <td>${expense.category}</td>
               <td>${new Date(expense.date).toLocaleDateString()}</td>
             </tr>
@@ -95,7 +95,7 @@ const ExpenseTable = ({ expenses, onDelete }) => {
             .join("")}
           <tr style="background-color: #f0a500; font-weight: bold;">
             <td>Total</td>
-            <td>$${totalAmount.toFixed(2)}</td>
+            <td>₹${totalAmount.toFixed(2)}</td>
             <td></td>
             <td></td>
           </tr>
@@ -167,7 +167,7 @@ const ExpenseTable = ({ expenses, onDelete }) => {
             <tr key={expense._id}>
               <td>{expense.description}</td>
               <td>
-                <span className="expense-amount">${expense.amount.toFixed(2)}</span>
+                <span className="expense-amount">₹{expense.amount.toFixed(2)}</span>
               </td>
               <td>
                 <span className="expense-category">{expense.category}</span>
@@ -200,7 +200,7 @@ const ExpenseTable = ({ expenses, onDelete }) => {
           <tr className="total-row">
             <td><strong>Total</strong></td>
             <td>
-              <span className="expense-amount">${totalAmount.toFixed(2)}</span>
+              <span className="expense-amount">₹{totalAmount.toFixed(2)}</span>
             </td>
             <td colSpan={4}></td>
           </tr>

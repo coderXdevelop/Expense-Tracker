@@ -66,9 +66,9 @@ const FilterBar = ({ onFilter }) => {
   const badge = (() => {
     if (activeType === "category" && category) return category;
     if (activeType === "amount") {
-      if (amountMode === "exact" && exactAmount) return `= $${exactAmount}`;
+      if (amountMode === "exact" && exactAmount) return `= ₹${exactAmount}`;
       if (amountMode === "range" && (minAmount || maxAmount))
-        return `$${minAmount || "0"} – $${maxAmount || "∞"}`;
+        return `₹${minAmount || "0"} – ₹${maxAmount || "∞"}`;
     }
     if (activeType === "date") {
       if (dateMode === "day" && day) return day;

@@ -43,7 +43,7 @@ const ExpensePieChart = ({ expenses = [] }) => {
             cy="50%"
             labelLine={false}
             label={({ name, value, percent }) => 
-              `${name}: $${value.toFixed(2)} (${(percent * 100).toFixed(1)}%)`
+              `${name}: ₹${value.toFixed(2)} (${(percent * 100).toFixed(1)}%)`
             }
             outerRadius={120}
             fill="#8884d8"
@@ -54,13 +54,13 @@ const ExpensePieChart = ({ expenses = [] }) => {
             ))}
           </Pie>
           <Tooltip 
-            formatter={(value) => `$${value.toFixed(2)}`}
+            formatter={(value) => `₹${value.toFixed(2)}`}
             labelFormatter={(label) => `${label}`}
           />
           <Legend 
             verticalAlign="bottom" 
             height={36}
-            formatter={(value, entry) => `${entry.payload.name}: $${entry.payload.value.toFixed(2)}`}
+            formatter={(value, entry) => `${entry.payload.name}: ₹${entry.payload.value.toFixed(2)}`}
           />
         </PieChart>
       </ResponsiveContainer>

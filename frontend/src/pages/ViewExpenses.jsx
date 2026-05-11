@@ -155,13 +155,13 @@ const ViewExpenses = () => {
             {showTotalType === "monthly" ? (
               <div className="total-card">
                 <div className="total-label">Monthly Total</div>
-                <div className="total-amount">${monthlyTotal.toFixed(2)}</div>
+              <div className="total-amount">₹{monthlyTotal.toFixed(2)}</div>
                 <div className="total-period">Current Month</div>
               </div>
             ) : (
               <div className="total-card">
                 <div className="total-label">Lifetime Total</div>
-                <div className="total-amount">${lifetimeTotal.toFixed(2)}</div>
+              <div className="total-amount">₹{lifetimeTotal.toFixed(2)}</div>
                 <div className="total-period">All Time</div>
               </div>
             )}
