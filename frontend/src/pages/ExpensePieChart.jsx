@@ -35,17 +35,14 @@ const ExpensePieChart = ({ expenses = [] }) => {
 
   return (
     <div className="pie-chart-container">
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
             data={categoryData}
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={({ name, value, percent }) => 
-              `${name}: ₹${value.toFixed(2)} (${(percent * 100).toFixed(1)}%)`
-            }
-            outerRadius={120}
+            outerRadius={100}
             fill="#8884d8"
             dataKey="value"
           >
@@ -57,13 +54,27 @@ const ExpensePieChart = ({ expenses = [] }) => {
             formatter={(value) => `₹${value.toFixed(2)}`}
             labelFormatter={(label) => `${label}`}
           />
-          <Legend 
-            verticalAlign="bottom" 
-            height={36}
-            formatter={(value, entry) => `${entry.payload.name}: ₹${entry.payload.value.toFixed(2)}`}
-          />
         </PieChart>
       </ResponsiveContainer>
+      
+      {/* Custom Legend/Details */}
+      <div className="pie-chart-legend">
+        {categoryData.map((entry, index) => (
+          <div key={`legend-${index}`} className="legend-item">
+            <div 
+              className="legend-color" 
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            ></div>
+            <div className="legend-text">
+              <span className="legend-category">{entry.name}</span>
+              <span className="legend-amount">₹{entry.value.toFixed(2)}</span>
+              <span className="legend-percentage">
+                ({((entry.value / categoryData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1004,10 +1004,11 @@ h3 { font-size: 1.125rem; }
 
 .pie-chart-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   animation: fadeUp 0.3s ease both;
-  min-height: 420px;
+  min-height: 500px;
   width: 100%;
 }
 
@@ -1015,14 +1016,75 @@ h3 { font-size: 1.125rem; }
   filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.22));
 }
 
-.pie-chart-container .recharts-legend-item {
-  color: var(--text-2) !important;
-}
-
 .pie-chart-container .recharts-default-tooltip {
   background-color: var(--bg-3) !important;
   border: 1px solid var(--border) !important;
   border-radius: var(--radius-sm) !important;
+}
+
+/* ── Custom Pie Chart Legend ──────────────────────────────────── */
+.pie-chart-legend {
+  width: 100%;
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(255,255,255,0.02);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.02);
+  transition: var(--transition);
+}
+
+.legend-item:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.legend-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.legend-category {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.legend-amount {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+.legend-percentage {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  font-weight: 400;
 }
 
 /* ── Responsive ─────────────────────────────────────────── */
@@ -1036,7 +1098,14 @@ h3 { font-size: 1.125rem; }
     max-width: 100%;
   }
   .pie-chart-container {
-    min-height: 350px;
+    min-height: 450px;
+  }
+  .pie-chart-legend {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .legend-item {
+    padding: 0.75rem;
   }
   .profile-hero { flex-direction: column; text-align: center; align-items: center; }
   .profile-actions { justify-content: center; }
