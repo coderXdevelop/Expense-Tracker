@@ -10,6 +10,7 @@ import {
   getExpensesByDay,
   getExpensesByAmountRange,
   getExpensesByExactAmount,
+  getMonthlyExpenses,
   getExpensesTotal,
 } from "../service/Api.js";
 import ExpenseTable from "./ExpenseTable.jsx";
@@ -18,6 +19,7 @@ import FilterBar from "./Filterbar.jsx";
 const ViewExpenses = () => {
   const [expenses, setExpenses] = useState([]);
   const [lifetimeTotal, setLifetimeTotal] = useState(0);
+  const [monthlyTotal, setMonthlyTotal] = useState(0);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -27,6 +29,7 @@ const ViewExpenses = () => {
     } else {
       fetchExpenses();
       fetchLifetimeTotal();
+      fetchMonthlyTotal();
     }
   }, [user, navigate]);
 
@@ -42,9 +45,25 @@ const ViewExpenses = () => {
   const fetchLifetimeTotal = async () => {
     try {
       const data = await getExpensesTotal();
-      setLifetimeTotal(data.totalAmount);
+      setLifetimeTotal(data.totalAmount || 0);
     } catch (error) {
       console.error("Error fetching total:", error);
+    }
+  };
+
+  const fetchMonthlyTotal = async () => {
+    try {
+      const now = new Date();
+      const month = now.getMonth() + 1;
+      const year = now.getFullYear();
+      const data = await getMonthlyExpenses(month, year);
+      const total = Array.isArray(data)
+        ? data.reduce((sum, exp) => sum + Number(exp.amount || 0), 0)
+        : 0;
+      setMonthlyTotal(total);
+    } catch (error) {
+      console.error("Error fetching monthly total:", error);
+      setMonthlyTotal(0);
     }
   };
 
@@ -83,6 +102,7 @@ const ViewExpenses = () => {
       await deleteExpense(id);
       fetchExpenses();
       fetchLifetimeTotal();
+      fetchMonthlyTotal();
     } catch (error) {
       console.error("Error deleting expense:", error);
     }
@@ -109,6 +129,7 @@ const ViewExpenses = () => {
 
       {/* Totals */}
       <div className="totals-bar">
+        <p><strong>Monthly Total:</strong> ${monthlyTotal.toFixed(2)}</p>
         <p><strong>Lifetime Total:</strong> ${lifetimeTotal.toFixed(2)}</p>
       </div>
     </div>

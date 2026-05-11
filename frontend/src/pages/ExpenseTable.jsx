@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 const ExpenseTable = ({ expenses, onDelete }) => {
   const navigate = useNavigate();
+  const totalAmount = expenses.reduce(
+    (sum, expense) => sum + Number(expense.amount || 0),
+    0
+  );
 
   if (!expenses || expenses.length === 0) {
     return (
@@ -60,6 +64,15 @@ const ExpenseTable = ({ expenses, onDelete }) => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr className="total-row">
+            <td>Total</td>
+            <td>
+              <span className="expense-amount">${totalAmount.toFixed(2)}</span>
+            </td>
+            <td colSpan={4}></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
