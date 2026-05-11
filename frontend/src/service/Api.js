@@ -110,7 +110,7 @@ export const getExpensesByDateRange = async (startDate, endDate) => {
 
 // Monthly filter
 export const getMonthlyExpenses = async (month, year) => {
-  const res = await API.get(`/expenses/filter/monthly?month=${month}&year=${year}`, { headers: authHeader() });
+  const res = await API.get(`/expenses/total/monthly?month=${month}&year=${year}`, { headers: authHeader() });
   return res.data;
 };
 

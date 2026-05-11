@@ -18,6 +18,7 @@ const { protect } = require('../middleware/authMiddleware');
 
 // Totals FIRST
 router.get('/expenses/total', protect, getExpensesTotal);
+router.get('/expenses/total/monthly', protect, getMonthlyExpenses);
 
 // CRUD
 router.post('/expenses', protect, createExpenses);
@@ -32,7 +33,7 @@ router.get('/expenses/filter/amount-exact', protect, getExpensesByExactAmount);
 router.get('/expenses/filter/amount-range', protect, getExpensesByAmountRange);
 router.get('/expenses/filter/day', protect, getExpensesByDay);
 router.get('/expenses/filter/date-range', protect, getExpensesByDateRange);
-router.get('/expenses/filter/monthly', protect, getMonthlyExpenses);
+
 
 
 module.exports = router;
