@@ -962,6 +962,35 @@ h3 { font-size: 1.125rem; }
   font-weight: 400;
 }
 
+/* ── Pie Chart Section ──────────────────────────────────── */
+.pie-chart-wrapper {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeUp 0.3s ease both;
+  min-height: 450px;
+}
+
+.pie-chart-container svg {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+.pie-chart-container .recharts-legend-item {
+  color: var(--text-2) !important;
+}
+
+.pie-chart-container .recharts-default-tooltip {
+  background-color: var(--bg-3) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 640px) {
   .form-row { grid-template-columns: 1fr; }

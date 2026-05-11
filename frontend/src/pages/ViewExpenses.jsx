@@ -15,9 +15,11 @@ import {
 } from "../service/Api.js";
 import ExpenseTable from "./ExpenseTable.jsx";
 import FilterBar from "./Filterbar.jsx";
+import ExpensePieChart from "./ExpensePieChart.jsx";
 
 const ViewExpenses = () => {
   const [expenses, setExpenses] = useState([]);
+  const [monthlyExpenses, setMonthlyExpenses] = useState([]);
   const [lifetimeTotal, setLifetimeTotal] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState(0);
   const [showTotalType, setShowTotalType] = useState("lifetime");
@@ -58,6 +60,7 @@ const ViewExpenses = () => {
       const month = now.getMonth() + 1;
       const year = now.getFullYear();
       const data = await getMonthlyExpenses(month, year);
+      setMonthlyExpenses(data);
       const total = Array.isArray(data)
         ? data.reduce((sum, exp) => sum + Number(exp.amount || 0), 0)
         : 0;
@@ -65,6 +68,7 @@ const ViewExpenses = () => {
     } catch (error) {
       console.error("Error fetching monthly total:", error);
       setMonthlyTotal(0);
+      setMonthlyExpenses([]);
     }
   };
 
@@ -160,6 +164,16 @@ const ViewExpenses = () => {
               <div className="total-period">All Time</div>
             </div>
           )}
+        </div>
+        
+        {/* Pie Chart */}
+        <div className="pie-chart-wrapper">
+          <h3 style={{ marginTop: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>
+            {showTotalType === "monthly" ? "Monthly Breakdown by Category" : "Lifetime Breakdown by Category"}
+          </h3>
+          <ExpensePieChart 
+            expenses={showTotalType === "monthly" ? monthlyExpenses : expenses} 
+          />
         </div>
       </div>
     </div>
