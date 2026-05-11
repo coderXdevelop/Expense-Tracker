@@ -150,30 +150,33 @@ const ViewExpenses = () => {
             </button>
           </div>
         </div>
-        <div className="totals-display">
-          {showTotalType === "monthly" ? (
-            <div className="total-card">
-              <div className="total-label">Monthly Total</div>
-              <div className="total-amount">${monthlyTotal.toFixed(2)}</div>
-              <div className="total-period">Current Month</div>
-            </div>
-          ) : (
-            <div className="total-card">
-              <div className="total-label">Lifetime Total</div>
-              <div className="total-amount">${lifetimeTotal.toFixed(2)}</div>
-              <div className="total-period">All Time</div>
-            </div>
-          )}
-        </div>
-        
-        {/* Pie Chart */}
-        <div className="pie-chart-wrapper">
-          <h3 style={{ marginTop: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>
-            {showTotalType === "monthly" ? "Monthly Breakdown by Category" : "Lifetime Breakdown by Category"}
-          </h3>
-          <ExpensePieChart 
-            expenses={showTotalType === "monthly" ? monthlyExpenses : expenses} 
-          />
+        <div className="totals-content">
+          {/* Total Card */}
+          <div className="totals-display">
+            {showTotalType === "monthly" ? (
+              <div className="total-card">
+                <div className="total-label">Monthly Total</div>
+                <div className="total-amount">${monthlyTotal.toFixed(2)}</div>
+                <div className="total-period">Current Month</div>
+              </div>
+            ) : (
+              <div className="total-card">
+                <div className="total-label">Lifetime Total</div>
+                <div className="total-amount">${lifetimeTotal.toFixed(2)}</div>
+                <div className="total-period">All Time</div>
+              </div>
+            )}
+          </div>
+          
+          {/* Pie Chart */}
+          <div className="pie-chart-wrapper">
+            <h3 style={{ marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-2)' }}>
+              {showTotalType === "monthly" ? "Monthly Breakdown by Category" : "Lifetime Breakdown by Category"}
+            </h3>
+            <ExpensePieChart 
+              expenses={showTotalType === "monthly" ? monthlyExpenses : expenses} 
+            />
+          </div>
         </div>
       </div>
     </div>
