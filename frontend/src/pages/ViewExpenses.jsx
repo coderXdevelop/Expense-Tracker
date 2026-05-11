@@ -20,6 +20,7 @@ const ViewExpenses = () => {
   const [expenses, setExpenses] = useState([]);
   const [lifetimeTotal, setLifetimeTotal] = useState(0);
   const [monthlyTotal, setMonthlyTotal] = useState(0);
+  const [showTotalType, setShowTotalType] = useState("lifetime");
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -127,10 +128,39 @@ const ViewExpenses = () => {
       {/* Table */}
       <ExpenseTable expenses={expenses} onDelete={handleDelete} />
 
-      {/* Totals */}
-      <div className="totals-bar">
-        <p><strong>Monthly Total:</strong> ${monthlyTotal.toFixed(2)}</p>
-        <p><strong>Lifetime Total:</strong> ${lifetimeTotal.toFixed(2)}</p>
+      {/* Totals Toggle Section */}
+      <div className="totals-section">
+        <div className="totals-header">
+          <div className="totals-toggle-group">
+            <button
+              className={`totals-toggle ${showTotalType === "monthly" ? "active" : ""}`}
+              onClick={() => setShowTotalType("monthly")}
+            >
+              📅 Monthly
+            </button>
+            <button
+              className={`totals-toggle ${showTotalType === "lifetime" ? "active" : ""}`}
+              onClick={() => setShowTotalType("lifetime")}
+            >
+              📊 Lifetime
+            </button>
+          </div>
+        </div>
+        <div className="totals-display">
+          {showTotalType === "monthly" ? (
+            <div className="total-card">
+              <div className="total-label">Monthly Total</div>
+              <div className="total-amount">${monthlyTotal.toFixed(2)}</div>
+              <div className="total-period">Current Month</div>
+            </div>
+          ) : (
+            <div className="total-card">
+              <div className="total-label">Lifetime Total</div>
+              <div className="total-amount">${lifetimeTotal.toFixed(2)}</div>
+              <div className="total-period">All Time</div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

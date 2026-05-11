@@ -66,9 +66,7 @@ const ExpenseTable = ({ expenses, onDelete }) => {
         </tbody>
         <tfoot>
           <tr className="total-row">
-            <td></td>
-            <td></td>
-            <td>Total</td>
+            <td><strong>Total</strong></td>
             <td>
               <span className="expense-amount">${totalAmount.toFixed(2)}</span>
             </td>

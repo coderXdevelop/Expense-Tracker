@@ -41,6 +41,12 @@ const Profile = () => {
 
   return (
     <div className="page">
+      <div className="profile-header">
+        <button onClick={handleLogout} className="btn btn-danger btn-sm">
+          ⎋ Logout
+        </button>
+      </div>
+
       <div className="profile-hero">
         <div className="avatar-wrapper">
           <div className="avatar-placeholder">
@@ -63,10 +69,6 @@ const Profile = () => {
         <Link to="/expenses" className="btn btn-secondary">
           📊 View Expenses
         </Link>
-
-        <button onClick={handleLogout} className="btn btn-danger">
-          ⎋ Logout
-        </button>
       </div>
     </div>
   );
