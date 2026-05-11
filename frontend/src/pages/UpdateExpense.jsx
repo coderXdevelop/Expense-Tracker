@@ -15,7 +15,7 @@ const UpdateExpense = () => {
   useEffect(() => {
     const fetchExpense = async () => {
       try {
-        const expense = await getExpenseById(expenseId, user.token);
+        const expense = await getExpenseById(expenseId);
         console.log("Fetched expense:", expense);
         setAmount(expense.amount);
         setDescription(expense.description);
@@ -26,15 +26,15 @@ const UpdateExpense = () => {
       }
     };
 
-    if (user?.token) {
+    if (expenseId) {
       fetchExpense();
     }
-  }, [user, expenseId]);
+  }, [expenseId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateExpense(user.token, expenseId, { amount, description, category, date });
+      await updateExpense(expenseId, { amount, description, category, date });
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
