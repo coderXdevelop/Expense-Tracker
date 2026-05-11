@@ -151,7 +151,6 @@ const ViewExpenses = () => {
           </div>
         </div>
         <div className="totals-content">
-          {/* Total Card */}
           <div className="totals-display">
             {showTotalType === "monthly" ? (
               <div className="total-card">
@@ -167,12 +166,13 @@ const ViewExpenses = () => {
               </div>
             )}
           </div>
-          
-          {/* Pie Chart */}
+
           <div className="pie-chart-wrapper">
-            <h3 style={{ marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-2)' }}>
-              {showTotalType === "monthly" ? "Monthly Breakdown by Category" : "Lifetime Breakdown by Category"}
-            </h3>
+            <div className="pie-chart-header">
+              <h3>
+                {showTotalType === "monthly" ? "Monthly Breakdown by Category" : "Lifetime Breakdown by Category"}
+              </h3>
+            </div>
             <ExpensePieChart 
               expenses={showTotalType === "monthly" ? monthlyExpenses : expenses} 
             />
