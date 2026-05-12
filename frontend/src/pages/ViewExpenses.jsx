@@ -13,9 +13,9 @@ import {
   getMonthlyExpenses,
   getExpensesTotal,
 } from "../service/Api.js";
-import ExpenseTable from "./ExpenseTable.jsx";
-import FilterBar from "./Filterbar.jsx";
-import ExpensePieChart from "./ExpensePieChart.jsx";
+import ExpenseTable from "..components/ExpenseTable.jsx";
+import FilterBar from "../components/FilterBar.jsx";
+import ExpensePieChart from "../components/ExpensePieChart.jsx";
 
 const ViewExpenses = () => {
   const [expenses, setExpenses] = useState([]);
