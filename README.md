@@ -1,31 +1,29 @@
 # Expense Tracker
 
-A full-stack MERN Expense Tracker application with user authentication and expense management.
+A full-stack MERN Expense Tracker application that allows users to manage and track daily expenses with secure JWT authentication.
 
 ## Features
 
-* User registration and login
-* JWT-based authentication
-* Add expenses
-* View expenses
-* Update expenses
-* Delete expenses
-* Update user profile
-* Responsive frontend
-* Cloud database using MongoDB Atlas
+* User authentication (Register/Login)
+* JWT-based authorization
+* Add, update, and delete expenses
+* Expense history tracking
+* User profile management
+* Responsive UI
+* Cloud-hosted MongoDB database
 
 ---
 
-# Tech Stack
+## Tech Stack
 
-## Frontend
+### Frontend
 
 * React
 * Vite
 * Axios
 * React Router DOM
 
-## Backend
+### Backend
 
 * Node.js
 * Express.js
@@ -33,7 +31,7 @@ A full-stack MERN Expense Tracker application with user authentication and expen
 * Mongoose
 * JWT Authentication
 
-## Deployment
+### Deployment
 
 * Frontend: Vercel
 * Backend: Render
@@ -41,62 +39,49 @@ A full-stack MERN Expense Tracker application with user authentication and expen
 
 ---
 
-# Project Structure
+## Live Demo
+
+### Frontend
+
+https://expense-tracker-u7ud.vercel.app
+
+### Backend API
+
+https://expense-tracker-e3kk.onrender.com
+
+---
+
+## Project Structure
 
 ```bash
 Expense-Tracker/
 │
 ├── frontend/
-│   ├── src/
-│   ├── public/
-│   └── package.json
-│
 ├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   └── package.json
-│
 └── README.md
 ```
 
 ---
 
-# Live Demo
+## Installation
 
-## Frontend
-
-[https://expense-tracker-u7ud.vercel.app](https://expense-tracker-u7ud.vercel.app)
-
-## Backend API
-
-[https://expense-tracker-e3kk.onrender.com](https://expense-tracker-e3kk.onrender.com)
-
----
-
-# Installation
-
-## Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/coderXdevelop/Expense-Tracker.git
-```
-
-```bash
 cd Expense-Tracker
 ```
 
 ---
 
-# Backend Setup
+## Backend Setup
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file inside the backend folder.
+Create `.env` inside `backend/`
 
 ```env
 PORT=5000
@@ -104,7 +89,7 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
 
-Run backend:
+Start backend server:
 
 ```bash
 npm start
@@ -112,20 +97,20 @@ npm start
 
 ---
 
-# Frontend Setup
+## Frontend Setup
 
 ```bash
 cd frontend
 npm install
 ```
 
-Create a `.env` file inside the frontend folder.
+Create `.env` inside `frontend/`
 
 ```env
 VITE_API_URL=https://expense-tracker-e3kk.onrender.com
 ```
 
-Run frontend:
+Start frontend:
 
 ```bash
 npm run dev
@@ -133,87 +118,31 @@ npm run dev
 
 ---
 
-# API Endpoints
-
-## Authentication
+## API Endpoints
 
 | Method | Endpoint           |
 | ------ | ------------------ |
 | POST   | /api/auth/register |
 | POST   | /api/auth/login    |
-| POST   | /api/auth/logout   |
-
-## User
-
-| Method | Endpoint           |
-| ------ | ------------------ |
 | GET    | /api/users/profile |
-| PUT    | /api/users/profile |
-
-## Expenses
-
-| Method | Endpoint          |
-| ------ | ----------------- |
-| GET    | /api/expenses     |
-| POST   | /api/expenses     |
-| GET    | /api/expenses/:id |
-| PUT    | /api/expenses/:id |
-| DELETE | /api/expenses/:id |
+| POST   | /api/expenses      |
+| GET    | /api/expenses      |
+| PUT    | /api/expenses/:id  |
+| DELETE | /api/expenses/:id  |
 
 ---
 
-# Deployment
+## Future Improvements
 
-## Frontend Deployment
-
-Frontend deployed using Vercel.
-
-## Backend Deployment
-
-Backend deployed using Render.
-
-## Database
-
-MongoDB Atlas used for cloud database hosting.
-
----
-
-# Environment Variables
-
-## Backend
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret_key
-```
-
-## Frontend
-
-```env
-VITE_API_URL=your_backend_url
-```
-
----
-
-# Future Improvements
-
-* Expense categories
-* Charts and analytics
-* Monthly reports
-* Export expenses
-* Dark mode
-* Pagination
+* Expense analytics dashboard
+* Charts and visual reports
 * Advanced filtering
+* Monthly summaries
+* Export to PDF/Excel
+* Dark mode
 
 ---
 
-# Author
+## Author
 
-GitHub: [https://github.com/coderXdevelop](https://github.com/coderXdevelop)
-
----
-
-# License
-
-This project is for learning and educational purposes.
+GitHub: https://github.com/coderXdevelop
